@@ -49,6 +49,8 @@ async function createArticle() {
         });
         if(response.ok){
             alert('Article créé avec succès !');
+            showPage('list-article');
+
         }else{
             const error = await response.json();
             alert(`Erreur : ${error.message}`);

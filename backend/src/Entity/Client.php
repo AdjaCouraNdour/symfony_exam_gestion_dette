@@ -54,7 +54,6 @@ class Client
 
     #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist', 'remove'])]
     #[Assert\Type(type: User::class)]
-    #[Assert\Valid(groups: ["WITH_USER"])]
     private ?User $userr = null;
    
 

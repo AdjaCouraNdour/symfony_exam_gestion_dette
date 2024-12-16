@@ -86,7 +86,6 @@ class UserController extends AbstractController
             return $this->json(['error' => 'Données invalides'], 400);
         }
 
-        // Utilisez maintenant l'EntityManagerInterface pour persister et flush les données
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

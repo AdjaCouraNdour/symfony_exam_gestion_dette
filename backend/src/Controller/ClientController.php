@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Repository\ClientRepository;
+use App\Repository\UserRepository;
 use App\Entity\Client;
+use App\Entity\User;
+use App\Enums\UserRole;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface; // Importez cette classe
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,11 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ClientController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
     private ClientRepository $clientRepository;
+    // private UserRepository $userRepository;
 
-    public function __construct(ClientRepository $clientRepository)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ClientRepository $clientRepository,
+        UserRepository $userRepository
+    ) {
+        $this->entityManager = $entityManager;
         $this->clientRepository = $clientRepository;
+        $this->userRepository = $userRepository;
     }
 
     #[Route('api/clients', name: 'api_clients_list', methods: ['GET'])]
@@ -78,6 +89,7 @@ class ClientController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
+        // Validation des champs obligatoires pour le client
         if (empty($data['surname']) || empty($data['telephone']) || empty($data['adresse'])) {
             return $this->json(['error' => 'Les champs surname, telephone et adresse sont requis'], 400);
         }
@@ -87,13 +99,36 @@ class ClientController extends AbstractController
         $client->setTelephone($data['telephone']);
         $client->setAdresse($data['adresse']);
 
+        // Gestion de l'ajout d'un utilisateur associé
+        if (!empty($data['addUser']) && $data['addUser'] === true) {
+            if (empty($data['login']) || empty($data['nom']) || empty($data['prenom']) || empty($data['password'])) {
+                return $this->json(['error' => 'Les champs login, nom, prenom et password sont requis pour ajouter un utilisateur'], 400);
+            }
+
+            $user = new User();
+            $user->setLogin($data['login']);
+            $user->setNom($data['nom']);
+            $user->setPrenom($data['prenom']);
+            $user->setPassword(password_hash($data['password'], PASSWORD_BCRYPT));
+            $user->setRole(UserRole::roleClient);
+
+            try {
+                $this->userRepository->save($user);
+            } catch (\Exception $e) {
+                return $this->json(['error' => 'Erreur lors de la création de l\'utilisateur : ' . $e->getMessage()], 500);
+            }
+
+            // Associer l'utilisateur au client
+            $client->setUserr($user);
+        }
+
         try {
             $this->clientRepository->save($client);
         } catch (\Exception $e) {
             return $this->json(['error' => 'Erreur lors de la création du client : ' . $e->getMessage()], 500);
         }
 
-        return $this->json(['message' => 'Client created successfully'], 201);
+        return $this->json(['message' => 'Client créé avec succès'], 201);
     }
 
     #[Route('api/clients/edit/{id}', name: 'api_clients_edit', methods: ['PATCH'])]
@@ -125,3 +160,8 @@ class ClientController extends AbstractController
         return $this->json(['message' => 'Client updated successfully']);
     }
 }
+
+
+
+
+

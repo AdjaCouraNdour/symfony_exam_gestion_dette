@@ -1,6 +1,20 @@
 const API_URL = 'http://localhost:8000/api';
 
-document.addEventListener('DOMContentLoaded', listerClients);
+document.addEventListener('DOMContentLoaded', () => {
+    // Gérer l'affichage des champs utilisateur
+    const addUserCheckbox = document.getElementById('add-user');
+    const userFields = document.getElementById('user-fields');
+
+    addUserCheckbox.addEventListener('change', () => {
+        if (addUserCheckbox.checked) {
+            userFields.classList.remove('hidden');
+        } else {
+            userFields.classList.add('hidden');
+        }
+    });
+
+    showPage('list-client');
+});
 
 async function listerClients() {
     try {
@@ -40,20 +54,41 @@ async function createClient() {
     const telephone = document.getElementById('telephone').value;
     const adresse = document.getElementById('adresse').value;
 
-    try{
+    // Si addUser est sélectionné, récupérer les informations de l'utilisateur
+    const addUser = document.getElementById('add-user').checked;
+    const user = addUser ? {
+        login: document.getElementById('login').value,
+        nom: document.getElementById('nom').value,
+        prenom: document.getElementById('prenom').value,
+        password: document.getElementById('password').value,
+    } : null;
+
+    // Créer l'objet de données du client à envoyer au serveur
+    const clientData = {
+        surname,
+        telephone,
+        adresse,
+        addUser,  // Inclure la valeur de addUser
+        ...(user ? { user } : {})  // Si addUser est true, ajouter l'objet user
+    };
+
+    try {
         const response = await fetch(`${API_URL}/clients`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body:JSON.stringify({surname,telephone,adresse})
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(clientData),
         });
-        if(response.ok){
+
+        if (response.ok) {
             alert('Client créé avec succès !');
-        }else{
+            showPage('list-client');
+        } else {
             const error = await response.json();
             alert(`Erreur : ${error.message}`);
         }
-    }catch(err){
-        console.error('Erreur lors de la création du client:', err);
+    } catch (err) {
+        console.error('Erreur lors de la création du client :', err);
+        alert('Une erreur est survenue lors de la création du client.');
     }
 }
 
@@ -72,5 +107,3 @@ function showPage(page) {
         listerClients();
     }
 }
-
-// showPage('list-client');

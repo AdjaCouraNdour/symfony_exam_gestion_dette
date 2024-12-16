@@ -142,6 +142,8 @@ async function createDette() {
 
         if (response.ok) {
             alert('Dette créée avec succès !');
+            showPage('list-dette');
+
         } else {
             const error = await response.json();
             alert(`Erreur : ${error.message}`);

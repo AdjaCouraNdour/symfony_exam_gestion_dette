@@ -53,6 +53,8 @@ async function createUser() {
             alert(`Erreur : ${error.message}`);
         } else {
             alert('Utilisateur créé avec succès !');
+            showPage('list-user');
+
         }
     } catch (err) {
         console.error('Erreur lors de la création de utilisateur:', err);
