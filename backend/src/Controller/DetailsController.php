@@ -44,7 +44,7 @@ class DetailsController extends AbstractController
                 'qteDette' => $detail->getQteDette(),
                 'article' => [
                     'id' => $detail->getArticle()->getId(),
-                    'name' => $detail->getArticle()->getLibelle(),  // Vous pouvez ajuster en fonction des attributs de votre entité Article
+                    'libelle' => $detail->getArticle()->getLibelle(),  // Vous pouvez ajuster en fonction des attributs de votre entité Article
                 ],
                 'dette' => [
                     'id' => $detail->getDette()->getId(),
@@ -70,11 +70,11 @@ class DetailsController extends AbstractController
             'qteDette' => $detail->getQteDette(),
             'article' => [
                 'id' => $detail->getArticle()->getId(),
-                'name' => $detail->getArticle()->getName(),
+                'libelle' => $detail->getArticle()->getLibelle(),
             ],
             'dette' => [
                 'id' => $detail->getDette()->getId(),
-                'amount' => $detail->getDette()->getAmount(),
+                'montant' => $detail->getDette()->getMontant(),
             ],
         ]);
     }

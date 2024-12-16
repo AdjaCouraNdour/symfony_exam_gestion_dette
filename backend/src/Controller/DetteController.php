@@ -78,7 +78,22 @@ class DetteController extends AbstractController
         ]);
     }
 
+    #[Route('/api/clients/{clientNumber}/dettes', name:'api_clients_dettes', methods:['GET'])]  
+    public function getDettesForClient($clientNumber)
+    {
+        // Récupérer le client à partir du clientNumber
+        $client = $this->clientRepository->findOneBy(['telephone' => $clientNumber]);
 
+        if (!$client) {
+            return $this->json(['error' => 'Client non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Récupérer les dettes du client
+        $dettes = $client->getDettes();
+
+        return $this->json($dettes);
+    }
+     
     #[Route('api/dettes', name: 'api_dettes_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {

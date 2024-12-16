@@ -7,6 +7,7 @@ use App\Entity\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ClientController extends AbstractController
@@ -33,6 +34,23 @@ class ClientController extends AbstractController
 
         return $this->json($result);
     }
+    
+    #[Route('/api/clients/{clientNumber}/dettes', name:'api_clients_dettes', methods:['GET'])]  
+    public function getDettesForClient($clientNumber)
+    {
+        // Récupérer le client à partir du clientNumber
+        $client = $this->clientRepository->findOneBy(['telephone' => $clientNumber]);
+
+        if (!$client) {
+            return $this->json(['error' => 'Client non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Récupérer les dettes du client
+        $dettes = $client->getDettes();
+
+        return $this->json($dettes);
+    }
+
 
     #[Route('api/clients/search', name: 'api_clients_search', methods: ['GET'])]
     public function search(Request $request): JsonResponse

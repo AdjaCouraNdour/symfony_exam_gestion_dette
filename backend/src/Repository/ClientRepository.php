@@ -16,7 +16,15 @@ class ClientRepository extends ServiceEntityRepository
     {
         return $this->findOneBy(['telephone' => $phone]);
     }
-
+    public function findClientByPhonee(string $phone): ?Client
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.telephone = :phone')
+            ->setParameter('phone', $phone)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
     public function findClientBySurname(string $surname): ?Client
     {
         return $this->findOneBy(['surname' => $surname]);
