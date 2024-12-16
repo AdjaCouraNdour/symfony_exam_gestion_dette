@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %}Erreur{% endblock %}
+
+{% block body %}
+    <div class="flex items-center justify-center h-screen bg-gray-100">
+        <div class="text-center">
+            <h1 class="text-2xl font-bold mb-4">Erreur</h1>
+            <p class="text-lg">Une erreur s'est produite. Veuillez réessayer.</p>
+            <a href="{{ path('client.index') }}" class="mt-4 inline-block bg-burgundy text-white text-sm px-3 py-2 rounded-md hover:bg-red-700">
+                Retour à la liste des clients
+            </a>
+        </div>
+    </div>
+{% endblock %}

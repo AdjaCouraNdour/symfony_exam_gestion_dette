@@ -1,0 +1,85 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Détails du client{% endblock %}
+
+{% block body %}
+<div class="bg-nude min-h-screen py-10 px-5">
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">Tableau de Bord - Détails de la Dette</h1>
+
+    <!-- Section des informations de la dette -->
+    <div class="bg-white p-6 shadow-lg rounded-lg mb-10">
+        <h2 class="text-2xl font-semibold mb-4">Informations sur la Dette</h2>
+        <table class="min-w-full bg-white border mb-6 border-gray-300 rounded-lg">
+            <thead>
+                <tr class="bg-burgundy text-white">
+                    <th class="py-2 px-4 border-b text-left">Champ</th>
+                    <th class="py-2 px-4 border-b text-left">Valeur</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for dette in datas %}
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b"><strong>Montant de la dette:</strong></td>
+                    <td class="py-2 px-4 border-b">{{ dette.montant }}</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b"><strong>Montant Restant:</strong></td>
+                    <td class="py-2 px-4 border-b">{{ dette.montantRestant }}</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b"><strong>Montant Versé:</strong></td>
+                    <td class="py-2 px-4 border-b">{{ dette.montantVerse }}</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b"><strong>Créé le:</strong></td>
+                    <td class="py-2 px-4 border-b">{{ dette.createAt ? dette.createAt|date('Y-m-d H:i') : 'Non spécifié' }}</td>
+                </tr>
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b"><strong>Mis à jour le:</strong></td>
+                    <td class="py-2 px-4 border-b">{{ dette.updateAt ? dette.updateAt|date('Y-m-d H:i') : 'Non spécifié' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Section des articles liés à la dette -->
+    <div class="bg-white p-6 shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold mb-4">Articles liés à la Dette</h2>
+        <table class="min-w-full bg-white border mb-6 border-gray-300 rounded-lg">
+            <thead>
+                <tr class="bg-burgundy text-white">
+                    <th class="py-2 px-4 border-b text-left">Libellé</th>
+                    <th class="py-2 px-4 border-b text-left">Quantité</th>
+                    <th class="py-2 px-4 border-b text-left">Prix unitaire (€)</th>
+                    <th class="py-2 px-4 border-b text-left">Montant dette (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if dette.articles is not empty %}
+                    {% for article in dette.articles %}
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-2 px-4 border-b">{{ article.nom }}</td>
+                            <td class="py-2 px-4 border-b">{{ article.quantite }}</td>
+                            <td class="py-2 px-4 border-b">{{ article.prix }}</td>
+                            <td class="py-2 px-4 border-b">
+                                {{ article.quantite * article.prix }} 
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="py-2 px-4 text-center">Aucun article associé.</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="py-2 px-4 text-center">Aucun article associé à cette dette.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('client.index') }}" class="mt-4 inline-block bg-burgundy text-white px-4 py-2 rounded-md hover:bg-red-700"> ← Retour à la liste</a>
+</div>
+{% endblock %} #}

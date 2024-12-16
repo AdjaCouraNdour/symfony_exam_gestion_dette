@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block title %}Détails du client{% endblock %}
+
+{% block body %}
+{# <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-md">
+    <div>
+        <h2 class="text-lg font-bold">Informations du Client</h2>
+        <p><strong>Surname :</strong> {{ client.surname }}</p>
+        <p><strong>Téléphone :</strong> {{ client.telephone }}</p>
+        <p><strong>Adresse :</strong> {{ client.adresse }}</p>
+    </div>
+</div> #}
+
+<div class="mt-6">
+    <h2 class="text-lg font-bold mb-4">Liste Des Articles</h2>
+    <table class="table-auto w-full border-collapse bg-gray-100">
+        <thead class="bg-burgundy text-white">
+            <tr>
+                <th class="border px-4 py-2">Libellé</th>
+                <th class="border px-4 py-2">Quantité</th>
+                <th class="border px-4 py-2">Prix Unitaire (€)</th>
+                <th class="border px-4 py-2">Prix Total (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr class="bg-white">
+                    <td class="border px-4 py-2">{{ article.libelle }}</td>
+                    <td class="border px-4 py-2">{{ article.quantite }}</td>
+                    <td class="border px-4 py-2">{{ article.prix_unitaire }}</td>
+                    <td class="border px-4 py-2">{{ article.prix_total }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="py-2 px-4 text-center">Aucun articles trouvés.</td>
+                </tr>
+                  
+            {% endfor %}
+        </tbody>
+    </table>
+       <a href="" class="mt-4 inline-block bg-burgundy text-white text-sm px-3 py-2 rounded-md hover:bg-red-700">
+            Back
+        </a> 
+</div>
+{% endblock %}
+

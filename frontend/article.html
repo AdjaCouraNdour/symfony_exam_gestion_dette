@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion articles</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+   
+        <!-- Page de liste des articles -->
+        <div id="list-article" class="page-content">
+            <h1 class="text-3xl font-bold text-indigo-900 mb-6">Liste des articles</h1>
+            <button onclick="showPage('create-article')" class="mb-4 px-6 py-2 bg-indigo-900 text-white rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                cree un article
+            </button>
+            <table id="articles-table" class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-indigo-100">
+                    <tr>
+                        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Reference</th>
+                        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Libelle</th>
+                        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Prix</th>
+                        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">QteStock</th>
+                    </tr>
+                </thead>
+                <tbody id="articles-body" class="text-sm">
+                    <!-- Les articles seront insérés ici -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Page de création de article -->
+        <div id="create-article" class="page-content hidden ">
+            <h1 class="text-3xl font-bold text-indigo-900 mb-6">Créer un article</h1>
+            <div class="bg-indigo-900 p-6 rounded-lg shadow-md text-white">
+            
+                <label for="libelle" class="block text-sm font-medium">Libelle</label>
+                <input type="text" id="libelle" placeholder="Libelle de l'article" class="w-full text-black px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <label for="prix" class="block text-sm font-medium mt-4">Prix</label>
+                <input type="text" id="prix" placeholder="Prix de l'article" class="w-full px-3 py-1 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <label for="qte_stock" class="block text-sm font-medium mt-4">QteStock</label>
+                <input type="text" id="qte_stock" placeholder="QteStock de article" class="w-full px-3 py-1 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <button onclick="createArticle()" class="mt-4 px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                    Créer l'article
+                </button>
+            </div>
+        </div>  
+        <script src="article.js"></script>
+
+</body>
+</html>

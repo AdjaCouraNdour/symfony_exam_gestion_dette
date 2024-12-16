@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="flex items-center justify-center">
+        <div class="bg-nude rounded-lg shadow-md mt-6 p-6 w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Ajouter un Article</h2>
+
+            {{ form_start(formArticle) }}
+            {{ form_row(formArticle.libelle) }}
+            {{ form_row(formArticle.qte_stock) }}
+            {{ form_row(formArticle.prix) }}
+
+            <div class="flex mt-6">
+                {{ form_widget(formArticle.submit, { 'attr': {'class': 'bg-burgundy hover:bg-burgundy-dark text-white font-bold py-2 px-4 rounded'}}) }}
+            </div>
+            
+            {{ form_end(formArticle) }}
+        </div>
+    </div>
+{% endblock %}

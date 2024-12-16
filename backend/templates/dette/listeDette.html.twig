@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des dettes{% endblock %}
+
+{% block body %}
+    <div class="flex">
+        <!-- Liste des dettes -->
+        <div class="w-full p-6">
+            
+            <h1 class="text-xl mb-6 text-black font-bold">Liste des Dettes</h1>
+
+
+                <form method="GET" action="{{ path('dette.listerLesDettes') }}" class="mb-4 flex items-center">
+                    <select name="hasAccount" class="border border-gray-300 h-10" onchange="this.form.submit()">
+                        <option value="">filtrer dette</option>
+                        <option value="1">Soldées</option>
+                        <option value="0">Non Soldées</option>
+                        <option value="2">Tous</option>
+                    </select>
+                        <button type="submit" class="bg-burgundy text-white px-4 py-2 rounded">Filtrer</button>
+
+                </form>
+
+
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                <thead>
+                    <tr class="bg-burgundy">
+                        <th class="py-2 px-4 border-b text-white text-left">ID</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Montant</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Montant versé</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Montant restant</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Client</th>
+                        <th class="py-2 px-4 border-b text-white text-left">État</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Date de création</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dette in dettes %}
+                        <tr class="bg-nude hover:bg-gray-100">
+                            <td class="py-2 px-4 border-b">{{ dette.id }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.montant }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.montantVerse }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.montantRestant }}</td>
+                            <td class="py-2 px-4 border-b">Id:{{ dette.client.id }} / Prenom : {{ dette.client.surname }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.etat.value }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.createAt|date('d-m-Y') }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="py-2 px-4 text-center">Aucune dette trouvée.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="mt-4">
+                {% if totalPages > 1 %}
+                    <nav aria-label="Pagination" class="flex justify-center">
+                        <a href="{{ path('dette.listerLesDettes', { page: page - 1 }) }}" class="px-3 py-1 bg-burgundy text-white rounded hover:bg-gray-300" {% if page == 1 %} style="pointer-events: none; opacity: 0.5;" {% endif %}>&laquo; </a>
+                        {% for i in 1..totalPages %}
+                            <a href="{{ path('dette.listerLesDettes', { page: i }) }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 {% if i == page %} bg-gray-400 {% endif %}">
+                                {{ i }}
+                            </a>
+                        {% endfor %}
+                        <a href="{{ path('dette.listerLesDettes', { page: page + 1 }) }}" class="px-3 py-1 bg-burgundy text-white rounded hover:bg-gray-300" {% if page == totalPages %} style="pointer-events: none; opacity: 0.5;" {% endif %}> &raquo;</a>
+                    </nav>
+                {% endif %}
+            </div>      
+        </div>
+    </div>
+{% endblock %}

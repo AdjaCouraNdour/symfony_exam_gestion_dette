@@ -1,0 +1,15 @@
+<div{{attributes}}>
+	<!-- component html -->
+	{{ form_start(form) }}
+	{{ form_row(form.surname) }}
+	{{ form_row(form.telephone) }}
+	{{ form_row(form.adresse) }}
+	{{ form_row(form.addUser) }}
+    <div id="client_user" > <!-- Ajoutez la classe hidden par défaut -->
+	{% if form.user is defined %}
+		{{ form_row(form.user) }}
+	{% endif %}
+     </div>
+	<button type="submit" class="btn btn-burgundy text-white bg-burgundy" data-action="live#action:prevent" data-live-action-param="store">Save</button>
+	{{ form_end(form) }}
+</div>

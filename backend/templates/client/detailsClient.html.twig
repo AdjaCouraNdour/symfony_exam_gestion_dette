@@ -1,0 +1,50 @@
+{# templates/client/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du client{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold mb-4 text-gray-800">Détails du client</h1>
+
+    <table class="min-w-full bg-white border mb-6 border-gray-300 rounded-lg">
+        <thead>
+            <tr class="bg-burgundy">
+                <th class="py-2 px-4 border-b text-white text-left">Champ</th>
+                <th class="py-2 px-4 border-b text-white text-left">Valeur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="hover:bg-gray-100">
+                <td class="py-2 px-4 border-b"><strong>Surnom:</strong></td>
+                <td class="py-2 px-4 border-b">{{ datas.surname }}</td>
+            </tr>
+            <tr class="hover:bg-gray-100">
+                <td class="py-2 px-4 border-b"><strong>Téléphone:</strong></td>
+                <td class="py-2 px-4 border-b">{{ datas.telephone }}</td>
+            </tr>
+            <tr class="hover:bg-gray-100">
+                <td class="py-2 px-4 border-b"><strong>Adresse:</strong></td>
+                <td class="py-2 px-4 border-b">{{ datas.adresse }}</td>
+            </tr>
+             <tr class="hover:bg-gray-100">
+                <td class="py-2 px-4 border-b"><strong>user:</strong></td>
+                {% if datas.userr != null %}
+                    <td class="py-2 px-4 border-b">Id : {{ datas.userr.id }} / Prenom : {{ datas.userr.prenom }} / Nom : {{ datas.userr.nom }}</td>
+                {% else %}
+                    <td class="py-2 px-4 border-b">null</td>
+                {% endif %}
+            
+            </tr>
+            <tr class="hover:bg-gray-100">
+                <td class="py-2 px-4 border-b"><strong>Créé le:</strong></td>
+                <td class="py-2 px-4 border-b">{{ datas.createAt ? datas.createAt|date('Y-m-d H:i') : 'Non spécifié' }}</td>
+            </tr>
+            <tr class="hover:bg-gray-100">
+                <td class="py-2 px-4 border-b"><strong>Mis à jour le:</strong></td>
+                <td class="py-2 px-4 border-b">{{ datas.updateAt ? datas.updateAt|date('Y-m-d H:i') : 'Non spécifié' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('client.index') }}" class="mt-4 inline-block bg-burgundy flex-end text-white px-4 py-2 rounded-md hover:bg-red-700"> ← Back to liste</a>
+{% endblock %}

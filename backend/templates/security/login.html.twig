@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_script_tags('app') }}
+    <script src="{{ asset('build/turbo.js') }}"></script> 
+    <script src="https://cdn.skypack.dev/@hotwired/turbo"></script>
+
+      <title>gestion boutique</title>
+</head>
+ <turbo-frame id="main">
+        
+    </turbo-frame>
+<body class="bg-bleugrisclair flex flex-col">
+
+{% block body %}
+<div class=" mt-10 flex bg-bleugrisclair items-center justify-center ">
+<div class=" bg-bleugrisclair rounded-lg p-6 w-full max-w-5xl">
+    <div id="formContainer" class="flex justify-center transition-all duration-500">
+    <div class="w-full max-w-md bg-bleugrisclair p-6 rounded-lg shadow-md">
+
+    <form method="post" class="w-full   ">
+        {% if error %}
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3 text-gray-700">
+                Connecté en tant que {{ app.user.userIdentifier }},
+                <a href="{{ path('app_logout') }}" class="text-blue-500 hover:underline">Déconnexion</a>
+            </div>
+        {% endif %}
+
+        <h1 class="text-2xl font-semibold text-center mb-6 text-gray-700">Connexion</h1>
+
+        <label for="inputLogin" class="block text-gray-600 font-medium mb-2">Login</label>
+        <input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="w-full px-4 py-2 mb-4 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" autocomplete="username" required autofocus>
+
+        <label for="inputPassword" class="block text-gray-600 font-medium mb-2">Mot de passe</label>
+        <input type="password" name="password" id="inputPassword" class="w-full px-4 py-2 mb-4 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" autocomplete="current-password" required>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <button class="w-1/2 mt-4 mx-auto bg-bleugris text-white font-semibold py-2 rounded-lg hover:bg-bleugris-dark" type="submit">
+            Connexion
+        </button>                                                                                                 
+    </form>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une Dette{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto mt-10">
+        <h1 class="text-2xl font-bold mb-1">Créer une Dette</h1>
+
+        <div class="mb-4 p-4 bg-gray-100 rounded shadow">
+            <p><strong>Surname :</strong> {{ client.surname }}</p>
+            <p><strong>Téléphone :</strong> {{ client.telephone }}</p>
+        </div>
+
+        <div class="flex space-x-6">
+            <div class="w-1/2">
+                <h2 class="text-xl font-bold mb-4">Liste des Articles</h2>
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                    <thead>
+                        <tr class="bg-burgundy text-white">
+                            <th class="px-4 text-left py-2">Libellé</th>
+                            <th class="px-4 text-left py-2">Prix</th>
+                            <th class="px-4 text-left py-2">Stock</th>
+                            <th class="px-4 text-left py-2">Cocher</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles %}
+                            <tr class="hover:bg-gray-100">
+                                <td class="px-4 py-2">{{ article.libelle }}</td>
+                                <td class="px-4 py-2">{{ article.prix }} CFA</td>
+                                <td class="px-4 py-2">{{ article.qteStock }}</td>
+                                <td class="px-4 py-2 text-center">
+                                    <input type="checkbox" onclick="addToSelection('{{ article.libelle }}', {{ article.prix }}, {{ article.id }})">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="w-1/2">
+                <h2 class="text-xl font-bold mb-4">Articles Sélectionnés</h2>
+                <table id="selectedArticlesTable" class="min-w-full bg-white border border-gray-300 rounded-lg">
+                    <thead>
+                        <tr class="bg-burgundy text-white">
+                            <th class="px-4 py-2">Libellé</th>
+                            <th class="px-4 py-2">Quantité</th>
+                            <th class="px-4 py-2">Prix</th>
+                            <th class="px-4 py-2">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les articles sélectionnés seront ajoutés ici via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <form action="{{ path('dette.save', { clientId: client.id }) }}" method="POST" onsubmit="saveSelection()">
+            <input type="hidden" id="selectedArticlesInput" name="selectedArticles">
+            <button type="submit" class="bg-burgundy text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200">
+                Sauvegarder la Dette
+            </button>
+        </form>
+
+    </div>
+  <script>
+    let selectedArticles = [];
+
+    function addToSelection(libelle, prix, id) {
+        const tableBody = document.getElementById('selectedArticlesTable').getElementsByTagName('tbody')[0];
+
+        const existingArticleIndex = selectedArticles.findIndex(article => article.id === id);
+        if (existingArticleIndex >= 0) {
+            selectedArticles.splice(existingArticleIndex, 1);
+            tableBody.deleteRow(existingArticleIndex);
+            return;
+        }
+
+        const newRow = tableBody.insertRow();
+
+        newRow.insertCell(0).textContent = libelle; 
+
+        const quantityCell = newRow.insertCell(1);
+        
+        const quantityWrapper = document.createElement('div');
+        quantityWrapper.classList.add('flex', 'items-center', 'space-x-2');
+
+        const quantityInput = document.createElement('input');
+        quantityInput.type = 'number';
+        quantityInput.min = 1;
+        quantityInput.value = 1; 
+        quantityInput.classList.add('border', 'px-2', 'py-1', 'w-12', 'text-center'); 
+
+        quantityWrapper.appendChild(quantityInput);
+        quantityCell.appendChild(quantityWrapper);
+
+        newRow.insertCell(2).textContent = prix.toFixed(2) + ' CFA';
+
+        const totalCell = newRow.insertCell(3);
+        totalCell.textContent = (prix * 1).toFixed(2) + ' CFA';
+
+        selectedArticles.push({ libelle, prix, id, quantite: 1 });
+
+        quantityInput.addEventListener('input', function () {
+            const quantity = parseInt(quantityInput.value);
+            totalCell.textContent = (prix * quantity).toFixed(2) + ' CFA';
+            updateSelectedArticle(id, quantity);
+        });
+    }
+
+    function updateQuantity(id, change) {
+        const article = selectedArticles.find(article => article.id === id);
+        if (article) {
+            const index = selectedArticles.indexOf(article);
+            const quantityInput = document.getElementById('selectedArticlesTable').rows[index + 1].cells[1].getElementsByTagName('input')[0];
+            const newQuantity = article.quantite + change;
+
+            if (newQuantity > 0) {
+                article.quantite = newQuantity;
+                quantityInput.value = newQuantity; 
+            } else {
+                selectedArticles.splice(index, 1);
+                document.getElementById('selectedArticlesTable').deleteRow(index + 1);
+            }
+        }
+    }
+
+    function updateSelectedArticle(id, quantity) {
+        const article = selectedArticles.find(article => article.id === id);
+        if (article) {
+            article.quantite = quantity;
+        }
+    }
+
+    function saveSelection() {
+        document.getElementById('selectedArticlesInput').value = JSON.stringify(selectedArticles);
+    }
+</script>
+
+{% endblock %}

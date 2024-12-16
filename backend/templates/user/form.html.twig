@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="flex items-center justify-center">
+        <div class="bg-nude rounded-lg shadow-md mt-6 p-6 w-full max-w-md">
+            {# <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Ajouter un User</h2> #}
+
+            <form id="userForm" method="post" >
+                {{ form_start(formUser) }}
+                    {{ form_row(formUser.nom) }}
+                    <div id="nomError" class="text-red-600 text-sm"></div>
+                    
+                    {{ form_row(formUser.prenom) }}
+                    <div id="prenomError" class="text-red-600 text-sm"></div>
+                    
+                    {{ form_row(formUser.login) }}
+                    <div id="loginError" class="text-red-600 text-sm"></div>
+                    
+                    {{ form_row(formUser.password) }}
+                    <div id="passwordError" class="text-red-600 text-sm"></div>
+                    
+                    {{ form_row(formUser.role) }}
+                    <div id="roleError" class="text-red-600 text-sm"></div>
+                    
+                {{ form_end(formUser) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

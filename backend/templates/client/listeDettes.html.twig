@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des dettes{% endblock %}
+
+{% block body %}
+    <div class="flex">
+        <!-- Liste des dettes -->
+        
+        <div class="w-full p-6">
+            
+            <h1 class="text-xl mb-6 text-black font-bold">Liste Mes Dettes</h1>
+
+        <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-md">
+            <div>
+                <h2 class="text-lg font-bold">Informations du Client</h2>
+                <p><strong>Nom :</strong> {{ client.surname }}</p>
+                <p><strong>Téléphone :</strong> {{ client.telephone }}</p>
+                <p><strong>Adresse :</strong> {{ client.adresse }}</p>
+            </div>
+
+            <div>
+                <h2 class="text-lg font-bold">Détails des Dettes</h2>
+                <ul>
+                {% set totalMontant = 0 %}
+                {% set totalMontantVerse = 0 %}
+                {% set totalMontantRestant = 0 %}
+                
+                {% for dette in dettes %}
+                    {% set totalMontant = totalMontant + dette.montant %}
+                    {% set totalMontantVerse = totalMontantVerse + dette.montantVerse %}
+                    {% set totalMontantRestant = totalMontant  - totalMontantVerse %}
+                {% endfor %}
+                
+                <li><strong>Total Montant :</strong> {{ totalMontant }} €</li>
+                <li><strong>Total Montant Versé :</strong> {{ totalMontantVerse }} €</li>
+                <li><strong>Total Montant Restant :</strong> {{ totalMontantRestant }} €</li>
+            </ul>
+            </div>
+        </div>
+                {# <form method="GET" action="{{ path('client.showDettesByClientId') }}" class="mb-4 flex items-center">
+                    <select name="hasAccount" class="border border-gray-300 h-10" onchange="this.form.submit()">
+                        <option value="">filtrer dette</option>
+                        <option value="1">Soldées</option>
+                        <option value="0">Non Soldées</option>
+                        <option value="2">Tous</option>
+                    </select>
+                        <button type="submit" class="bg-burgundy text-white px-4 py-2 rounded">Filtrer</button>
+
+                </form> #}
+
+<div class="mt-6">
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                <thead>
+                    <tr class="bg-burgundy">
+                        <th class="py-2 px-4 border-b text-white text-left">Montant</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Montant versé</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Montant restant</th>
+                        <th class="py-2 px-4 border-b text-white text-left">État</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Date de création</th>
+                        <th class="py-2 px-4 border-b text-white text-left">Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dette in dettes %}
+                        <tr class="bg-nude hover:bg-gray-100">
+                            <td class="py-2 px-4 border-b">{{ dette.montant }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.montantVerse }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.montantRestant }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.etat.value }}</td>
+                            <td class="py-2 px-4 border-b">{{ dette.createAt|date('d-m-Y') }}</td>
+                            <td> 
+                                <a href="{{ path('client.showDetailsByDetteId',{ 'id': dette.id }) }}" class="bg-burgundy text-white text-sm px-3 rounded-md flex items-center hover:bg-red-700">
+                                        Details
+                                </a>
+                            </td>
+
+                               
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="py-2 px-4 text-center">Aucune dette trouvée.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+</div>
+            <!-- Pagination -->
+            {# <div class="mt-4">
+                {% if totalPages > 1 %}
+                    <nav aria-label="Pagination" class="flex justify-center">
+                        <a href="{{ path('dette.listerLesDettes', { page: page - 1 }) }}" class="px-3 py-1 bg-burgundy text-white rounded hover:bg-gray-300" {% if page == 1 %} style="pointer-events: none; opacity: 0.5;" {% endif %}>&laquo; </a>
+                        {% for i in 1..totalPages %}
+                            <a href="{{ path('dette.listerLesDettes', { page: i }) }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 {% if i == page %} bg-gray-400 {% endif %}">
+                                {{ i }}
+                            </a>
+                        {% endfor %}
+                        <a href="{{ path('dette.listerLesDettes', { page: page + 1 }) }}" class="px-3 py-1 bg-burgundy text-white rounded hover:bg-gray-300" {% if page == totalPages %} style="pointer-events: none; opacity: 0.5;" {% endif %}> &raquo;</a>
+                    </nav>
+                {% endif %}
+            </div>       #}
+        </div>
+    </div>
+{% endblock %}

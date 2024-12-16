@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérification Client{% endblock %}
+
+{% block body %}
+    <div class="max-w-md mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
+        <h1 class="text-2xl mb-6 text-black font-bold text-center">Vérifier le Client</h1>
+        
+        {{ form_start(formClientDette) }}
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="surname">Prénom</label>
+            {{ form_widget(formClientDette.surname, {
+                'attr': {
+                    'class': 'border border-gray-300 p-2 rounded w-full h-10'
+                }
+            }) }}
+            {{ form_errors(formClientDette.surname) }}
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="telephone">Téléphone</label>
+            {{ form_widget(formClientDette.telephone, {
+                'attr': {
+                    'class': 'border border-gray-300 p-2 rounded w-full h-10'
+                }
+            }) }}
+            {{ form_errors(formClientDette.telephone) }}
+        </div>
+
+        <div class="flex justify-center">
+            {{ form_widget(formClientDette.submit, {
+                'attr': {
+                    'class': 'bg-burgundy text-white font-bold px-4 py-2 rounded hover:bg-red-700 transition duration-200'
+                }
+            }) }}
+        </div>
+        
+        {{ form_end(formClientDette) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Clients</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100" >
+
+            <!-- Page de liste des clients -->
+            <div id="list-client" class="page-content ">
+                <h1 class="text-3xl font-bold text-indigo-900 mb-6">Liste des clients</h1>
+                <button onclick="showPage('create-client')"class="mb-4 px-6 py-2 bg-indigo-900 text-white rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    cree un client
+                </button>
+                <table id="clients-table" class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                    <thead class="bg-indigo-100">
+                        <tr>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Nom</th>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Téléphone</th>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Adresse</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clients-body" class="text-sm">
+                        <!-- Les clients seront insérés ici -->
+                    </tbody>
+                </table>
+            </div>
+              <!-- Page de création de client -->
+              <div id="create-client" class="page-content hidden ">
+                <h1 class="text-3xl font-bold text-indigo-900 mb-6">Créer un client</h1>
+                <div class="bg-indigo-900 p-6 rounded-lg shadow-md text-white">
+                    <label for="surname" class="block text-sm font-medium">Nom</label>
+                    <input type="text" id="surname" placeholder="Nom du client" class="w-full px-3 py-1 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                    <label for="telephone" class="block text-sm font-medium mt-4">Téléphone</label>
+                    <input type="text" id="telephone" placeholder="Téléphone du client" class="w-full text-black px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                    <label for="adresse" class="block text-sm font-medium mt-4">Adresse</label>
+                    <input type="text" id="adresse" placeholder="Adresse du client" class="w-full text-black px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                    <button onclick="createClient()" class="mt-4 px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        Créer
+                    </button>
+                </div>
+            </div>
+
+            <script src="client.js"></script>
+
+</body>
+</html>
