@@ -81,17 +81,6 @@ class ClientController extends AbstractController
         ]);
     }
 
-
-
-
-
-
-
-
-
-
-
-
     #[Route('api/clients', name: 'api_clients_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
@@ -138,16 +127,6 @@ class ClientController extends AbstractController
 
         return $this->json(['message' => 'Client créé avec succès'], 201);
     }
-
-
-
-
-
-
-
-
-
-
 
     #[Route('api/clients/edit/{id}', name: 'api_clients_edit', methods: ['PATCH'])]
     public function edit(Request $request, int $id): JsonResponse
