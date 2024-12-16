@@ -46,6 +46,7 @@ async function listerClients() {
         }
     } catch (err) {
         console.error('Erreur lors de la récupération des clients :', err);
+        alert('Une erreur est survenue lors de la récupération des clients.');
     }
 }
 
@@ -84,7 +85,7 @@ async function createClient() {
             showPage('list-client');
         } else {
             const error = await response.json();
-            alert(`Erreur : ${error.message}`);
+            alert(`Erreur : ${error.error || error.message}`);
         }
     } catch (err) {
         console.error('Erreur lors de la création du client :', err);

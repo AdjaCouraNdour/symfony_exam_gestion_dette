@@ -16,16 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ClientController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
     private ClientRepository $clientRepository;
-    // private UserRepository $userRepository;
+    private UserRepository $userRepository;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
         ClientRepository $clientRepository,
         UserRepository $userRepository
     ) {
-        $this->entityManager = $entityManager;
         $this->clientRepository = $clientRepository;
         $this->userRepository = $userRepository;
     }
@@ -84,6 +81,17 @@ class ClientController extends AbstractController
         ]);
     }
 
+
+
+
+
+
+
+
+
+
+
+
     #[Route('api/clients', name: 'api_clients_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
@@ -101,15 +109,15 @@ class ClientController extends AbstractController
 
         // Gestion de l'ajout d'un utilisateur associé
         if (!empty($data['addUser']) && $data['addUser'] === true) {
-            if (empty($data['login']) || empty($data['nom']) || empty($data['prenom']) || empty($data['password'])) {
+            if (empty($data['user']['login']) || empty($data['user']['nom']) || empty($data['user']['prenom']) || empty($data['user']['password'])) {
                 return $this->json(['error' => 'Les champs login, nom, prenom et password sont requis pour ajouter un utilisateur'], 400);
             }
 
             $user = new User();
-            $user->setLogin($data['login']);
-            $user->setNom($data['nom']);
-            $user->setPrenom($data['prenom']);
-            $user->setPassword(password_hash($data['password'], PASSWORD_BCRYPT));
+            $user->setLogin($data['user']['login']);
+            $user->setNom($data['user']['nom']);
+            $user->setPrenom($data['user']['prenom']);
+            $user->setPassword(password_hash($data['user']['password'], PASSWORD_BCRYPT));
             $user->setRole(UserRole::roleClient);
 
             try {
@@ -130,6 +138,16 @@ class ClientController extends AbstractController
 
         return $this->json(['message' => 'Client créé avec succès'], 201);
     }
+
+
+
+
+
+
+
+
+
+
 
     #[Route('api/clients/edit/{id}', name: 'api_clients_edit', methods: ['PATCH'])]
     public function edit(Request $request, int $id): JsonResponse
