@@ -1,5 +1,50 @@
 const API_URL = 'http://localhost:8000/api';
 
+// Fonction pour lister les dettes depuis le backend
+async function listerDettes() {
+    try {
+        const response = await fetch(`${API_URL}/dettes`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response.ok) {
+            const dettes = await response.json();
+            displayDettes(dettes); // Affiche les dettes dans la liste
+        } else {
+            const error = await response.json();
+            alert(`Erreur : ${error.message}`);
+        }
+    } catch (err) {
+        console.error('Erreur lors de la récupération des dettes :', err);
+        alert("Erreur lors du chargement des dettes.");
+    }
+}
+
+// Fonction pour afficher les dettes dans un tableau
+function displayDettes(dettes) {
+    const dettesList = document.getElementById('dettes-list');
+    dettesList.innerHTML = ''; // Efface la liste existante
+
+    // Parcours des dettes pour afficher les éléments dans le tableau
+    dettes.forEach(dette => {
+        const tr = document.createElement('tr');
+
+        // Ajoute chaque colonne avec les informations de la dette
+        tr.innerHTML = `
+            <td class="py-2 px-4">${dette.clientnum}</td>
+            <td class="py-2 px-4">${dette.date}</td>
+            <td class="py-2 px-4">${dette.montant} €</td>
+            <td class="py-2 px-4">${dette.montantRestant} €</td>
+            <td class="py-2 px-4">
+                <button onclick="viewDetails(${dette.id})" class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">Voir</button>
+            </td>
+        `;
+
+        dettesList.appendChild(tr);
+    });
+}
+
 // Fonction pour charger les articles depuis le backend
 async function listerArticles() {
     try {
@@ -177,4 +222,5 @@ function getSelectedArticles() {
 
 document.addEventListener('DOMContentLoaded', () => {
     listerArticles(); // Charge les articles depuis le backend
+    // listerDettes()
 });

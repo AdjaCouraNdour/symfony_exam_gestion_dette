@@ -108,3 +108,4 @@ function showPage(page) {
         listerClients();
     }
 }
+showPage('list-client');

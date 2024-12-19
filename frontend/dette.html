@@ -8,56 +8,104 @@
 </head>
 <body class="bg-gray-100">
 
-    <div class="container mx-auto p-6">
-        <!-- Page de sélection des articles -->
-        <div id="select-articles" class="mb-6">
-            <h1 class="text-3xl font-bold text-indigo-900 mb-6">Sélectionner des Articles</h1>
-            <div class="flex">
-                <!-- Liste des articles disponibles -->
-                <div class="w-1/2 mr-6">
-                    <h2 class="text-xl font-semibold text-indigo-700">Articles Disponibles</h2>
-                    <ul id="articles-list" class="list-none p-0">
-                        <!-- Les articles seront insérés ici -->
-                    </ul>
+    <div class="flex flex-col min-h-screen">
+        <!-- Barre de navigation -->
+        <nav class="flex justify-between items-center bg-indigo-900 text-white px-6 py-4 shadow-md">
+            <div class="text-lg text-2xl font-bold">Gestion des Dettes</div>
+            <div class="flex items-center space-x-4">
+                <img src="https://via.placeholder.com/40" alt="Photo utilisateur" class="w-10 h-10 rounded-full">
+                <div>
+                    <p class="font-medium">Nom de l'utilisateur</p>
+                    <p class="text-sm text-indigo-200">email@exemple.com</p>
                 </div>
+            </div>
+        </nav>
 
-                <!-- Tableau des articles sélectionnés -->
-                <div class="w-1/2">
-                    <div class="mb-4">
-                        <label for="client-num" class="block text-sm font-semibold text-gray-700 mb-2">Numéro du Client</label>
-                        <input 
-                            type="text" 
-                            id="client-num" 
-                            placeholder="Entrez le numéro du client"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        >
+        <div class="flex flex-1">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-indigo-900 text-white shadow-lg">
+                <div class="p-4">
+                    <nav>
+                        <ul class="space-y-4">
+                            <li>
+                                <button onclick="showPage('list-dette')" class="w-full text-left px-4 py-2 bg-indigo-800 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    Liste des Dettes
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-6">
+                <!-- Page de sélection des articles -->
+                <div id="select-articles" class="page-content">
+                    <div class="flex mb-6">
+                        <div class="w-1/2 mr-6">
+                            <h2 class="text-xl font-semibold text-indigo-700 mb-4">Articles Disponibles</h2>
+                            <ul id="articles-list" class="list-none p-0">
+                                <!-- Les articles seront insérés ici -->
+                            </ul>
+                        </div>
+
+                        <div class="w-1/2">
+                            <div class="mb-4">
+                                <label for="client-num" class="block text-sm font-semibold text-gray-700 mb-2">Numéro du Client</label>
+                                <input 
+                                    type="text" 
+                                    id="client-num" 
+                                    placeholder="Entrez le numéro du client"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                >
+                            </div>
+
+                            <h2 class="text-xl font-semibold text-indigo-700 mb-4">Articles Sélectionnés</h2>
+                            <table id="selected-articles" class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                                <thead class="bg-indigo-100">
+                                    <tr>
+                                        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Article</th>
+                                        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Quantité</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="selected-articles-body" class="text-sm">
+                                    <!-- Les articles sélectionnés avec quantités seront insérés ici -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <h2 class="text-xl font-semibold text-indigo-700">Articles Sélectionnés</h2>
-                    <table id="selected-articles" class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                    <div>
+                        <button onclick="createDette()" class="mt-4 px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                            Créer la Dette
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Liste des Dettes -->
+                <div id="list-dette" class="page-content hidden">
+                    <h2 class="text-xl font-semibold text-indigo-700 mb-4">Liste des Dettes</h2>
+                    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                         <thead class="bg-indigo-100">
                             <tr>
-                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Article</th>
-                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Quantité</th>
+                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Client</th>
+                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Articles</th>
+                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Montant Total</th>
+                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Date</th>
                             </tr>
                         </thead>
-                        <tbody id="selected-articles-body" class="text-sm">
-                            <!-- Les articles sélectionnés avec quantités seront insérés ici -->
+                        <tbody id="list-dette-body">
+                            <!-- Les dettes seront insérées ici -->
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
 
-        <!-- Bouton pour créer la dette -->
-        <div>
-            <button onclick="createDette()" class="mt-4 px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
-                Créer la Dette
-            </button>
+            </main>
         </div>
     </div>
 
     <script src="dette.js"></script>
     <script src="article.js"></script>
+
 </body>
 </html>

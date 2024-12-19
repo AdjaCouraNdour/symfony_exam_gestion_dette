@@ -3,69 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion Clients</title>
+    <title>Gestion clients</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100" >
-
-            <!-- Page de liste des clients -->
-            <div id="list-client" class="page-content ">
-                <h1 class="text-3xl font-bold text-indigo-900 mb-6">Liste des clients</h1>
-                <button onclick="showPage('create-client')"class="mb-4 px-6 py-2 bg-indigo-900 text-white rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    cree un client
-                </button>
-                <table id="clients-table" class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-                    <thead class="bg-indigo-100">
-                        <tr>
-                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Nom</th>
-                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Téléphone</th>
-                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Adresse</th>
-                        </tr>
-                    </thead>
-                    <tbody id="clients-body" class="text-sm">
-                        <!-- Les clients seront insérés ici -->
-                    </tbody>
-                </table>
-            </div>
-              <!-- Page de création de client -->
-              <div id="create-client" class="page-content hidden ">
-                <h1 class="text-3xl font-bold text-indigo-900 mb-6">Créer un client</h1>
-                <div class="bg-indigo-900 p-6 rounded-lg shadow-md text-white">
-                    <label for="surname" class="block text-sm font-medium">Nom</label>
-                    <input type="text" id="surname" placeholder="Nom du client" class="w-full px-3 py-1 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-                    <label for="telephone" class="block text-sm font-medium mt-4">Téléphone</label>
-                    <input type="text" id="telephone" placeholder="Téléphone du client" class="w-full text-black px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-                    <label for="adresse" class="block text-sm font-medium mt-4">Adresse</label>
-                    <input type="text" id="adresse" placeholder="Adresse du client" class="w-full text-black px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-                    <!-- Case à cocher pour afficher les champs utilisateur -->
-                        <div class="mt-4">
-                            <label for="add-user" class="text-sm font-medium text-white">
-                                <input type="checkbox" id="add-user" class="mr-2">
-                                Ajouter un utilisateur
-                            </label>
-                        </div>
-
-                        <!-- Champs pour l'utilisateur, masqués par défaut -->
-                        <div id="user-fields" class="hidden mt-4 bg-white p-4 rounded-lg shadow-md">
-                            <h2 class="text-lg font-bold text-gray-800 mb-4">Informations utilisateur</h2>
-                            <label for="prenom" class="block text-sm font-medium">Prénom</label>
-                            <input type="text" id="prenom" placeholder="Prénom d'utilisateur" class="w-full px-3 py-1 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-                            <label for="nom" class="block text-sm font-medium mt-4">Nom</label>
-                            <input type="text" id="nom" placeholder="Nom d'utilisateur" class="w-full px-3 py-1 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-                            <label for="login" class="block text-sm font-medium mt-4">Login</label>
-                            <input type="text" id="login" placeholder="Login de l'utilisateur" class="w-full px-3 py-1 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-                            <label for="password" class="block text-sm font-medium mt-4">Mot de passe</label>
-                            <input type="password" id="password" placeholder="Mot de passe" class="w-full px-3 py-1 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-
-                        </div>
-
-                    <button onclick="createClient()" class="mt-4 px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
-                        Créer
-                    </button>
+<body class="bg-gray-100">
+    <div class="flex flex-col min-h-screen">
+        <!-- Barre de navigation -->
+        <nav class="flex justify-between items-center bg-indigo-900 text-white px-6 py-4 shadow-md">
+            <div class="text-lg text-2xl font-bold">Gestion Clients</div>
+            <div class="flex items-center space-x-4">
+                <img src="https://via.placeholder.com/40" alt="Photo utilisateur" class="w-10 h-10 rounded-full">
+                <div>
+                    <p class="font-medium">Nom de l'utilisateur</p>
+                    <p class="text-sm text-indigo-200">email@exemple.com</p>
                 </div>
             </div>
+        </nav>
 
-            <script src="client.js"></script>
+        <div class="flex flex-1">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-indigo-900 text-white shadow-lg">
+                <div class="p-4">
+                    <nav>
+                        <ul class="space-y-4">
+                            <li>
+                                <button onclick="showPage('list-client')" class="w-full text-left px-4 py-2 bg-indigo-800 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    Liste des clients
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
 
+            <!-- Main Content -->
+            <main class="flex-1 p-6">
+                <!-- Page de liste des clients -->
+                <div id="list-client" class="page-content">
+                    <div class="flex justify-between items-center mb-6">
+                        <h1 class="text-3xl font-bold text-indigo-900">Liste des clients</h1>
+                        <button onclick="showPage('create-client')" class="px-6 py-2 bg-indigo-900 text-white rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            Ajouter un client
+                        </button>
+                    </div>
+                    <table id="list-client" class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                        <thead class="bg-indigo-100">
+                            <tr>
+                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">ID</th>
+                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Nom</th>
+                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Email</th>
+                                <th class="py-2 px-4 text-left text-sm font-semibold text-gray-700">Téléphone</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-body" class="text-sm">
+                            <!-- Les clients seront insérés ici -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Page de création de client -->
+                <div id="create-client" class="page-content hidden">
+                    <h1 class="text-3xl font-bold text-indigo-900 mb-6">Ajouter un client</h1>
+                    <div class="bg-indigo-900 p-6 rounded-lg shadow-md text-white">
+                        <label for="nom" class="block text-sm font-medium">Nom</label>
+                        <input type="text" id="nom" placeholder="Nom du client" class="w-full text-black px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <label for="email" class="block text-sm font-medium mt-4">Email</label>
+                        <input type="email" id="email" placeholder="Email du client" class="w-full px-3 py-1 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <label for="telephone" class="block text-sm font-medium mt-4">Téléphone</label>
+                        <input type="text" id="telephone" placeholder="Téléphone du client" class="w-full px-3 py-1 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <button onclick="createClient()" class="mt-4 px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                            Ajouter le client
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="client.js"></script>
 </body>
 </html>

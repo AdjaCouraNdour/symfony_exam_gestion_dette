@@ -4,39 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paiement des Dettes</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-100">
 
-    <div class="container mx-auto mt-10 p-5 bg-white rounded shadow-lg">
-        <h1 class="text-2xl font-bold text-gray-800 mb-5">Paiement des Dettes</h1>
+    <div class="flex flex-col min-h-screen">
 
-        <!-- Recherche du client -->
-        <div class="mb-5">
-            <label for="client-number" class="block text-gray-700 font-medium mb-2">Numéro du client :</label>
-            <div class="flex items-center">
-                <input type="text" id="client-number" placeholder="Entrez le numéro du client" 
-                       class="w-full px-4 py-2 border rounded-l-lg focus:outline-none focus:ring focus:ring-blue-300">
-                <button id="search-client" 
-                        class="px-4 py-2 bg-pink-600 text-white rounded-r-lg hover:bg-blue-700 focus:outline-none">
-                    Rechercher
-                </button>
+        <!-- Barre de navigation -->
+        <nav class="flex justify-between items-center bg-indigo-900 text-white px-6 py-4 shadow-md">
+            <div class="text-lg text-2xl font-bold">Paiement des Dettes</div>
+            <div class="flex items-center space-x-4">
+                <img src="https://via.placeholder.com/40" alt="Photo utilisateur" class="w-10 h-10 rounded-full">
+                <div>
+                    <p class="font-medium">Nom de l'utilisateur</p>
+                    <p class="text-sm text-indigo-200">email@exemple.com</p>
+                </div>
             </div>
+        </nav>
+
+        <div class="flex flex-1">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-indigo-900 text-white shadow-lg">
+                <div class="p-4">
+                    <nav>
+                        <!-- <ul class="space-y-4">
+                            <li>
+                                <button onclick="showPage('paiement-dettes')" class="w-full text-left px-4 py-2 bg-indigo-800 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    Paiement des Dettes
+                                </button>
+                            </li>
+                            <li>
+                                <button onclick="showPage('client-list')" class="w-full text-left px-4 py-2 bg-indigo-800 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    Liste des paiement
+                                </button>
+                            </li>
+                        </ul> -->
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-6">
+                
+                <!-- Page de paiement des dettes -->
+                <div id="paiement-dettes" class="page-content">
+                    <h1 class="text-3xl font-bold text-indigo-900 mb-6">Paiement des Dettes</h1>
+
+                    <!-- Recherche du client -->
+                    <div class="mb-5">
+                        <label for="client-number" class="block text-gray-700 font-medium mb-2">Numéro du client :</label>
+                        <div class="flex items-center">
+                            <input type="text" id="client-number" placeholder="Entrez le numéro du client" 
+                                   class="w-full px-4 py-2 border rounded-l-lg focus:outline-none focus:ring focus:ring-blue-300">
+                            <button id="search-client" 
+                                    class="px-4 py-2 bg-pink-600 text-white rounded-r-lg hover:bg-blue-700 focus:outline-none">
+                                Rechercher
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Liste des dettes -->
+                    <div id="dette-list" class="mt-5">
+                        <!-- Les dettes seront ajoutées ici dynamiquement -->
+                    </div>
+
+                    <!-- Montant total -->
+                    <p id="montant-total" class="text-lg font-semibold text-gray-800 mt-5">Montant total à payer : 0.00 €</p>
+
+                    <!-- Bouton de validation -->
+                    <button id="submit-paiement" disabled 
+                            class="w-full mt-5 px-4 py-2 bg-indigo-100 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed">
+                        Valider le paiement
+                    </button>
+                </div>
+
+            </main>
         </div>
-
-        <!-- Liste des dettes -->
-        <div id="dette-list" class="mt-5">
-            <!-- Les dettes seront ajoutées ici dynamiquement -->
-        </div>
-
-        <!-- Montant total -->
-        <p id="montant-total" class="text-lg font-semibold text-gray-800 mt-5">Montant total à payer : 0.00 €</p>
-
-        <!-- Bouton de validation -->
-        <button id="submit-paiement" disabled 
-                class="w-full mt-5 px-4 py-2 bg-indigo-100 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed">
-            Valider le paiement
-        </button>
     </div>
 
     <script src="paiement.js"></script>
